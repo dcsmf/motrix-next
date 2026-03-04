@@ -116,5 +116,6 @@ export default {
   'bt-download-complete-tips': 'Tips: Du kan stoppe en oppgave for å avslutte seedingen',
   'bt-stopping-seeding-tip': 'Når du stopper seedingen, vil det ta litt tid å koble fra, vent...',
   'download-fail-message': 'Kunne ikke laste ned {{taskName}}',
-  'download-fail-notify': 'Nedlasting feilet'
+  'download-fail-notify': 'Nedlasting feilet',
+  'delete-all-task': 'Delete All Tasks',
 }

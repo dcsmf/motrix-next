@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'ヒント：タスクを停止しseedの作成を終了することができます',
   'bt-stopping-seeding-tip': 'シードを停止しています。切断するにはしばらく時間がかかります。お待ちください...',
   'download-fail-message': '{{taskName}} のダウンロードに失敗',
-  'download-fail-notify': 'ダウンロード失敗'
+  'download-fail-notify': 'ダウンロード失敗',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

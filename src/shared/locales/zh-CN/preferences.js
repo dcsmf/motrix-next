@@ -100,5 +100,10 @@ export default {
   'follow-metalink': '自动开始下载磁力链接、种子内的文件',
   'follow-torrent': '种子下载完后自动下载种子内容',
   'not-saved': '设置未保存',
-  'not-saved-confirm': '已修改的设置将会丢失，确定要离开吗?'
+  'not-saved-confirm': '已修改的设置将会丢失，确定要离开吗?',
+  'rpc-secret-empty-warning': 'RPC 密钥不能为空，这是安全必须项',
+  'update-available-title': '发现新版本',
+  'update-and-install': '下载并安装',
+  'is-latest-version': '已是最新版本',
+  'check-update-failed': '检查更新失败',
 }

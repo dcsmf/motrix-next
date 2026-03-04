@@ -29,5 +29,6 @@ export default {
   'gt1d': '一日を超える',
   'hour': '時',
   'minute': '分',
-  'second': '秒'
+  'second': '秒',
+  'show': 'Show Motrix Next',
 }

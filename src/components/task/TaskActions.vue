@@ -81,20 +81,20 @@ function onDeleteAll() {
 
 function resumeAll() {
   taskStore.resumeAllTask()
-    .then(() => message.success(t('task.resume-all-task-success') || 'Resumed'))
-    .catch(() => message.error(t('task.resume-all-task-fail') || 'Failed'))
+    .then(() => message.success(t('task.resume-all-task-success') || 'Resumed', { closable: true }))
+    .catch(() => message.error(t('task.resume-all-task-fail') || 'Failed', { closable: true }))
 }
 
 function pauseAll() {
   taskStore.pauseAllTask()
-    .then(() => message.success(t('task.pause-all-task-success') || 'Paused'))
-    .catch(() => message.error(t('task.pause-all-task-fail') || 'Failed'))
+    .then(() => message.success(t('task.pause-all-task-success') || 'Paused', { closable: true }))
+    .catch(() => message.error(t('task.pause-all-task-fail') || 'Failed', { closable: true }))
 }
 
 function purgeRecord() {
   taskStore.purgeTaskRecord()
-    .then(() => message.success(t('task.purge-record-success') || 'Purged'))
-    .catch(() => message.error(t('task.purge-record-fail') || 'Failed'))
+    .then(() => message.success(t('task.purge-record-success') || 'Purged', { closable: true }))
+    .catch(() => message.error(t('task.purge-record-fail') || 'Failed', { closable: true }))
 }
 </script>
 

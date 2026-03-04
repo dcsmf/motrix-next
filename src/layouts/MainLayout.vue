@@ -27,6 +27,7 @@ const isPreferencePage = computed(() => route.path.startsWith('/preference'))
 const showAbout = ref(false)
 
 let unlistenDragDrop: (() => void) | null = null
+let unlistenMenuEvent: (() => void) | null = null
 
 onMounted(async () => {
   const webview = getCurrentWebview()
@@ -39,7 +40,7 @@ onMounted(async () => {
       }
     }
   })
-  listen<string>('menu-event', async (event) => {
+  unlistenMenuEvent = await listen<string>('menu-event', async (event) => {
     const action = event.payload
     switch (action) {
       case 'new-task':
@@ -74,6 +75,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   if (unlistenDragDrop) unlistenDragDrop()
+  if (unlistenMenuEvent) unlistenMenuEvent()
 })
 </script>
 

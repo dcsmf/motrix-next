@@ -131,7 +131,7 @@ async function handleShowInFolder(task: Record<string, unknown>) {
   try {
     await revealItemInDir(filePath)
   } catch {
-    message.warning(t('task.file-not-exist'))
+    message.warning(t('task.file-not-exist'), { closable: true })
   }
 }
 </script>

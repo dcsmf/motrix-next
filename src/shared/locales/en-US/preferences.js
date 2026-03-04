@@ -98,5 +98,10 @@ export default {
   'auto-check-update': 'Automatically check for updates',
   'last-check-update-time': 'Last checked for an update',
   'not-saved': 'Preferences not saved',
-  'not-saved-confirm': 'The modified preferences will be lost, are you sure you want to leave?'
+  'not-saved-confirm': 'The modified preferences will be lost, are you sure you want to leave?',
+  'rpc-secret-empty-warning': 'RPC Secret is required for security',
+  'update-available-title': 'Update Available',
+  'update-and-install': 'Download & Install',
+  'is-latest-version': 'Already up to date',
+  'check-update-failed': 'Failed to check for updates'
 }

@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'Tips: Be tudod fejezni a tovvábadás',
   'bt-stopping-seeding-tip': 'tovvábadás befejezése, Ez eltarthat par percig...',
   'download-fail-message': 'Letöltés sikertelen volt {{taskName}}',
-  'download-fail-notify': 'Letöltés sikertelen volt'
+  'download-fail-notify': 'Letöltés sikertelen volt',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

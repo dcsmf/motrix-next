@@ -177,7 +177,7 @@ function handleSave() {
       'seed-time': String(form.value.seedTime),
     },
   }).catch(console.error)
-  message.success(t('preferences.save-success-message'))
+  message.success(t('preferences.save-success-message'), { closable: true })
 
   if (newLocale !== prevLocale) {
     dialog.info({

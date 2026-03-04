@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'Consejo: Puede detener una tarea para dejar de compartir',
   'bt-stopping-seeding-tip': 'Deteniendo la siembra, tomará un tiempo desconectarse, por favor espere...',
   'download-fail-message': 'No se pudo descargar {{taskName}}',
-  'download-fail-notify': 'Descarga fallida'
+  'download-fail-notify': 'Descarga fallida',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'Sfaturi: puteți opri o sarcină pentru a nu mai sta la "seed"',
   'bt-stopping-seeding-tip': 'Se oprește statul la seed, va dura ceva timp pentru a vă deconecta, vă rugăm să așteptați ...',
   'download-fail-message': 'Descărcarea nu a reușit {{taskName}}',
-  'download-fail-notify': 'Descărcarea nu a reușit'
+  'download-fail-notify': 'Descărcarea nu a reușit',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

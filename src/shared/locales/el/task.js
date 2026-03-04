@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'Συμβουλή: Μπορείτε να διακόψετε μία διεργασία για να σταματήσει ο διαμοιρασμός',
   'bt-stopping-seeding-tip': 'Γίνεται διακοπή του διαμοιρασμού, μπορεί να πάρει λίγη ώρα για την αποσύνδεση, παρακαλώ περιμένετε',
   'download-fail-message': 'Η λήψη του {{taskName}} απέτυχε',
-  'download-fail-notify': 'Η λήψη απέτυχε'
+  'download-fail-notify': 'Η λήψη απέτυχε',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'Suggerimento: È possibile interrompere un\'attività per fermare il seeding',
   'bt-stopping-seeding-tip': 'Seeding fermato, ci vorrà un po\' di tempo per disconnettersi, per favore, aspetta...',
   'download-fail-message': 'Impossibile scaricare {{taskName}}',
-  'download-fail-notify': 'Download Fallito'
+  'download-fail-notify': 'Download Fallito',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

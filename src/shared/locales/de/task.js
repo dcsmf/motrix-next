@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'Tipps: Sie können die Aufgabe stoppen, die aussaat zu beenden',
   'bt-stopping-seeding-tip': 'Wenn Sie die Aussaat beenden, dauert es einige Zeit, bis die Verbindung getrennt ist. Bitte warten Sie ...',
   'download-fail-message': 'Download von {{taskName}} fehlgeschlagen',
-  'download-fail-notify': 'Download fehlgeschlagen'
+  'download-fail-notify': 'Download fehlgeschlagen',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

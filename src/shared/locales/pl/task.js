@@ -115,5 +115,7 @@ export default {
   'bt-download-complete-tips': 'Wskazówka: Możesz zatrzymań zadanie aby wyłączyć seedowanie',
   'bt-stopping-seeding-tip': 'Zatrzymywane seedowania, zajmie chwilę rozłączanie się od klientów, proszę czekać...',
   'download-fail-message': 'Nie udało się pobrać {{taskName}}',
-  'download-fail-notify': 'Nie udało się pobrać'
+  'download-fail-notify': 'Nie udało się pobrać',
+  'delete-all-task': 'Delete All Tasks',
+  'task-detail-title': 'Task Details',
 }

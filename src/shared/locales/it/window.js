@@ -4,5 +4,6 @@ export default {
   'minimize': 'Riduci a icona',
   'zoom': 'Zoo',
   'toggle-fullsmcreen': 'Modalità a schermo intero',
-  'front': 'Riporta tutto davanti'
+  'front': 'Riporta tutto davanti',
+  'toggle-fullscreen': 'Enter Full Screen',
 }

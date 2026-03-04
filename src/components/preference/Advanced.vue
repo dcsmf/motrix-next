@@ -27,13 +27,16 @@ import {
 } from 'naive-ui'
 import {
   SyncOutline, DiceOutline, FolderOpenOutline, LinkOutline,
+  CloudDownloadOutline,
 } from '@vicons/ionicons5'
+import { check } from '@tauri-apps/plugin-updater'
 
 const { t } = useI18n()
 const preferenceStore = usePreferenceStore()
 const taskStore = useTaskStore()
 const message = useMessage()
 const dialog = useDialog()
+const checking = ref(false)
 
 const DEFAULT_TRACKER_SOURCE = [
   NGOSANG_TRACKERS_BEST_URL_CDN,
@@ -145,7 +148,7 @@ async function loadPaths() {
 
 async function handleSyncTracker() {
   if (form.value.trackerSource.length === 0) {
-    message.warning(t('preferences.bt-tracker-select-source'))
+    message.warning(t('preferences.bt-tracker-select-source'), { closable: true })
     return
   }
   syncingTracker.value = true
@@ -155,20 +158,46 @@ async function handleSyncTracker() {
     if (text) {
       form.value.btTracker = text
       form.value.lastSyncTrackerTime = Date.now()
-      message.success(t('preferences.bt-tracker-sync-succeed'))
+      message.success(t('preferences.bt-tracker-sync-succeed'), { closable: true })
     } else {
-      message.error(t('preferences.bt-tracker-sync-failed'))
+      message.error(t('preferences.bt-tracker-sync-failed'), { closable: true })
     }
   } catch {
-    message.error(t('preferences.bt-tracker-sync-failed'))
+    message.error(t('preferences.bt-tracker-sync-failed'), { closable: true })
   } finally {
     syncingTracker.value = false
   }
 }
 
-function handleCheckUpdate() {
-  message.info(t('app.checking-for-updates'))
-  form.value.lastCheckUpdateTime = Date.now()
+async function handleCheckUpdate() {
+  if (checking.value) return
+  checking.value = true
+  try {
+    const update = await check()
+    form.value.lastCheckUpdateTime = Date.now()
+    if (update?.available) {
+      dialog.info({
+        title: t('preferences.update-available-title') || 'Update Available',
+        content: `${update.version}`,
+        positiveText: t('preferences.update-and-install') || 'Download & Install',
+        negativeText: t('app.cancel') || 'Cancel',
+        onPositiveClick: async () => {
+          try {
+            await update.downloadAndInstall()
+            relaunch()
+          } catch (e) {
+            message.error(String(e), { closable: true })
+          }
+        },
+      })
+    } else {
+      message.success(t('preferences.is-latest-version') || 'Already up to date', { closable: true })
+    }
+  } catch (e) {
+    message.error(t('preferences.check-update-failed') || 'Check failed', { closable: true })
+  } finally {
+    checking.value = false
+  }
 }
 
 function onRpcPortDice() {
@@ -202,7 +231,7 @@ function handleSessionReset() {
       try {
         await taskStore.purgeTaskRecord()
         await taskStore.pauseAllTask()
-        message.success(t('preferences.session-reset') + ' ✓')
+        message.success(t('preferences.session-reset') + ' ✓', { closable: true })
       } catch {}
     },
   })
@@ -225,7 +254,7 @@ function handleFactoryReset() {
 
 function handleSave() {
   if (!form.value.rpcSecret) {
-    message.error(t('preferences.rpc-secret-empty-warning') || 'RPC Secret is required')
+    message.error(t('preferences.rpc-secret-empty-warning') || 'RPC Secret is required', { closable: true })
     return
   }
   const data: Record<string, unknown> = {
@@ -237,9 +266,17 @@ function handleSave() {
     config: {
       'rpc-listen-port': String(form.value.rpcListenPort),
       'rpc-secret': form.value.rpcSecret,
+      'enable-dht': 'true',
+      'enable-peer-exchange': 'true',
+      'enable-upnp': String(form.value.enableUpnp),
+      'listen-port': String(form.value.listenPort),
+      'dht-listen-port': String(form.value.dhtListenPort),
+      'user-agent': form.value.userAgent || '',
+      'log-level': form.value.logLevel || 'warn',
+      'bt-tracker': convertLineToComma(form.value.btTracker),
     },
   }).catch(console.error)
-  message.success(t('preferences.save-success-message'))
+  message.success(t('preferences.save-success-message'), { closable: true })
 }
 
 function handleReset() {
@@ -259,10 +296,15 @@ onMounted(() => {
       <NDivider title-placement="left">{{ t('preferences.auto-update') }}</NDivider>
       <NFormItem :show-label="false">
         <NSpace vertical>
-          <NCheckbox v-model:checked="form.autoCheckUpdate">{{ t('preferences.auto-check-update') }}</NCheckbox>
+          <NSpace align="center">
+            <NCheckbox v-model:checked="form.autoCheckUpdate">{{ t('preferences.auto-check-update') }}</NCheckbox>
+            <NButton size="small" :loading="checking" @click="handleCheckUpdate">
+              <template #icon><NIcon :size="14"><CloudDownloadOutline /></NIcon></template>
+              {{ t('app.check-updates-now') || 'Check for Updates' }}
+            </NButton>
+          </NSpace>
           <div v-if="form.lastCheckUpdateTime" class="info-text">
             {{ t('preferences.last-check-update-time') }}: {{ new Date(form.lastCheckUpdateTime).toLocaleString() }}
-            <a class="action-link" @click.prevent="handleCheckUpdate">{{ t('app.check-updates-now') }}</a>
           </div>
         </NSpace>
       </NFormItem>
