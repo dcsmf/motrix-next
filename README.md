@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="media/logo.png" alt="Motrix Next" width="128" height="128" style="border-radius: 24px;" />
+  <img src="docs/media/logo.png" alt="Motrix Next" width="128" height="128" style="border-radius: 24px;" />
   <h1>Motrix Next</h1>
   <p>A full-featured download manager — rebuilt from the ground up.</p>
 
@@ -10,23 +10,32 @@
 ---
 
 <div align="center">
-  <img src="media/screenshot-downloading.png" alt="Motrix Next — Downloading" width="720" />
+  <img src="docs/media/screenshot-downloading.png" alt="Motrix Next — Downloading" width="720" />
 </div>
 
-## Background
+## Why Motrix Next?
 
-Motrix Next is built upon the ideas of [Motrix](https://github.com/agalwood/Motrix) by [agalwood](https://github.com/agalwood). We are grateful to the original creators and contributors — their aria2 integration, i18n translations, and download logic served as invaluable reference throughout development.
+[Motrix](https://github.com/agalwood/Motrix) by [agalwood](https://github.com/agalwood) was one of the best open-source download managers available — clean UI, aria2-powered, cross-platform. It inspired thousands of users and developers alike.
 
-The legacy Electron + Vue 2 stack had become difficult to maintain. Rather than patching further, Motrix Next rebuilds the application with a modern architecture:
+However, the original project has been largely inactive since 2023. The Electron + Vue 2 + Vuex + Element UI stack accumulated technical debt, making it increasingly difficult to maintain, extend, or package for modern platforms.
 
-- **Runtime** — Electron → **Tauri 2** (Rust-based, significantly smaller and lighter)
-- **Frontend** — Vue 2 + Vuex + Element UI → **Vue 3 Composition API + Pinia + Naive UI**
-- **Language** — JavaScript → **TypeScript**
-- **Styling** — SCSS + Element theme → **Vanilla CSS + CSS custom properties**
-- **Engine management** — Node.js `child_process` → **Tauri sidecar**
-- **Build** — electron-builder → **Vite + Cargo**
+**Motrix Next is not a fork — it is a complete rewrite.** Every component has been rebuilt from scratch with a modern architecture:
 
-Version numbering has been reset to reflect this clean break. The i18n translations (25+ languages), aria2 RPC protocol support, and overall UX philosophy have been preserved.
+| Layer | Motrix (Legacy) | Motrix Next |
+|-------|----------------|-------------|
+| **Runtime** | Electron | **Tauri 2** (Rust) |
+| **Frontend** | Vue 2 + Vuex | **Vue 3 Composition API + Pinia** |
+| **UI Framework** | Element UI | **Naive UI** |
+| **Language** | JavaScript | **TypeScript + Rust** |
+| **Styling** | SCSS + Element theme | **Vanilla CSS + custom properties** |
+| **Engine Mgmt** | Node.js `child_process` | **Tauri sidecar** |
+| **Build System** | electron-builder | **Vite + Cargo** |
+| **Bundle Size** | ~180 MB | **~15 MB** |
+| **Auto-Update** | electron-updater | **Tauri updater plugin** |
+
+What was preserved: the community-contributed **i18n translations** (25+ languages), the **aria2 RPC protocol** integration, and the core UX philosophy of keeping things simple and fast. Everything else — the runtime, the UI, the state management, the build pipeline, the update system — was redesigned and rewritten.
+
+Version numbering starts at `1.0.0` to reflect this clean break.
 
 ## Features
 
@@ -94,7 +103,7 @@ motrix-next/
 To bump the version, edit only `src-tauri/Cargo.toml`:
 
 ```toml
-version = "1.1.0"
+version = "1.0.3"
 ```
 
 ### Release
@@ -102,8 +111,8 @@ version = "1.1.0"
 Pushing a version tag triggers the CI pipeline which builds for all supported platforms:
 
 ```bash
-git tag v1.1.0
-git push origin v1.1.0
+git tag v1.0.3
+git push origin v1.0.3
 ```
 
 | Platform | Runner | Artifacts |
@@ -131,6 +140,10 @@ The workflow creates a draft release with all artifacts and a `latest.json` mani
 
 - [Motrix](https://github.com/agalwood/Motrix) by [agalwood](https://github.com/agalwood) and all its contributors
 - [Aria2](https://aria2.github.io/) — the powerful download engine at the core
+
+## Contributing
+
+PRs and issues are welcome! Please read the [Contributing Guide](docs/CONTRIBUTING.md) and [Code of Conduct](docs/CODE_OF_CONDUCT.md) before getting started.
 
 ## License
 
