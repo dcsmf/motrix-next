@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'Cookie',
   'task-proxy': 'Proxy',
   'task-error-info': 'Lỗi',
+  'file-missing': 'File missing',
   'task-piece': 'Mảnh',
   'task-piece-length': 'Kích thước mảnh',
   'task-num-pieces': 'Các mảnh',

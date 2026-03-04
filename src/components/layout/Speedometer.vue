@@ -23,7 +23,7 @@ const uploadSpeed = computed(() => bytesToSize(String(stat.value.uploadSpeed)))
         <NIcon :size="20"><SpeedometerOutline /></NIcon>
       </i>
     </div>
-    <div class="value" v-if="!isStopped">
+    <div class="value" :class="{ hidden: isStopped }">
       <em>{{ uploadSpeed }}/s</em>
       <span>{{ downloadSpeed }}/s</span>
     </div>
@@ -43,7 +43,10 @@ const uploadSpeed = computed(() => bytesToSize(String(stat.value.uploadSpeed)))
   height: 40px;
   padding: 5px 10px 5px 40px;
   border-radius: 100px;
-  transition: all .25s cubic-bezier(.645, .045, .355, 1);
+  transition: width .35s cubic-bezier(.4, 0, .2, 1),
+              padding .35s cubic-bezier(.4, 0, .2, 1),
+              border-color .25s ease,
+              background .25s ease;
   border: 1px solid var(--speedometer-border);
   background: var(--speedometer-bg);
 }
@@ -69,6 +72,8 @@ const uploadSpeed = computed(() => bytesToSize(String(stat.value.uploadSpeed)))
   justify-content: center;
   padding: 0;
   color: var(--speedometer-stopped);
+  transform: rotate(-15deg);
+  transition: transform .35s cubic-bezier(.4, 0, .2, 1), color .25s ease;
 }
 .speedometer em {
   font-style: normal;
@@ -91,6 +96,8 @@ const uploadSpeed = computed(() => bytesToSize(String(stat.value.uploadSpeed)))
   text-align: center;
   vertical-align: top;
   color: var(--speedometer-primary);
+  transition: transform .35s cubic-bezier(.4, 0, .2, 1), color .25s ease;
+  transform: rotate(0deg);
 }
 .mode em {
   display: inline-block;
@@ -110,6 +117,15 @@ const uploadSpeed = computed(() => bytesToSize(String(stat.value.uploadSpeed)))
   text-align: right;
   white-space: nowrap;
   text-overflow: ellipsis;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity .3s cubic-bezier(.4, 0, .2, 1),
+              transform .3s cubic-bezier(.4, 0, .2, 1);
+}
+.value.hidden {
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
 }
 .value em {
   font-size: 16px;

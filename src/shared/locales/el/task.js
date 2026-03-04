@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'Cookie',
   'task-proxy': 'Proxy',
   'task-error-info': 'Λάθος',
+  'file-missing': 'File missing',
   'task-piece': 'Κομμάτι',
   'task-piece-length': 'Μέγεθος κομματιού',
   'task-num-pieces': 'Κομμάτια',

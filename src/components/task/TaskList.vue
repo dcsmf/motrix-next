@@ -82,20 +82,24 @@ function handleItemClick(task: Record<string, unknown>, event: MouseEvent) {
 .task-list-item {
   margin-bottom: 16px;
 }
-.task-list-enter-active,
+.task-list-enter-active {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
 .task-list-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute;
+  width: calc(100% - 72px);
 }
 .task-list-enter-from {
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateY(24px) scale(0.97);
 }
 .task-list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateY(-10px) scale(0.97);
 }
 .task-list-move {
-  transition: transform 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .no-task {
   display: flex;

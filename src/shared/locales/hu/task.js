@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'Süti',
   'task-proxy': 'Proxy',
   'task-error-info': 'Hiba',
+  'file-missing': 'File missing',
   'task-piece': 'Darab',
   'task-piece-length': 'Darabméret',
   'task-num-pieces': 'Darabok',

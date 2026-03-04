@@ -30,6 +30,7 @@ export default {
   'task-cookie': 'クッキー',
   'task-proxy': 'プロキシ',
   'task-error-info': 'エラー',
+  'file-missing': 'File missing',
   'task-piece': 'ピース',
   'task-piece-length': 'ピースサイズ',
   'task-num-pieces': 'ピース',

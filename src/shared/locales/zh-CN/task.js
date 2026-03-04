@@ -30,6 +30,7 @@ export default {
   'task-cookie': 'Cookie',
   'task-proxy': '代理',
   'task-error-info': '错误信息',
+  'file-missing': '文件丢失',
   'task-piece': '分片',
   'task-piece-length': '分片大小',
   'task-num-pieces': '分片数量',

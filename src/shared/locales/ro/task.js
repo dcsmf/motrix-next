@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'Cookie',
   'task-proxy': 'Proxy',
   'task-error-info': 'Eroare',
+  'file-missing': 'File missing',
   'task-piece': 'Bucată',
   'task-piece-length': 'Dimensiunea piesei',
   'task-num-pieces': 'Piese',

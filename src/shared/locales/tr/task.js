@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'Çerez',
   'task-proxy': 'Proxy',
   'task-error-info': 'Hata',
+  'file-missing': 'File missing',
   'task-piece': 'Parça',
   'task-piece-length': 'Parça Boyutu',
   'task-num-pieces': 'Adet',

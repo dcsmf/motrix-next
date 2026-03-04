@@ -55,7 +55,7 @@ function handleExitCancel() {
 }
 
 onMounted(async () => {
-  nextTick(() => { appReady.value = true })
+  setTimeout(() => { appReady.value = true }, 50)
 
   const webview = getCurrentWebview()
   unlistenDragDrop = await webview.onDragDropEvent((event) => {

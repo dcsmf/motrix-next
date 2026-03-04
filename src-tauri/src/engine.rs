@@ -41,6 +41,25 @@ pub fn start_engine(app: &tauri::AppHandle, config: &serde_json::Value) -> Resul
         conf_path.exists()
     );
 
+    // Session file for persisting active/paused downloads across restarts
+    let session_path = app
+        .path()
+        .app_data_dir()
+        .map_err(|e| format!("Failed to get app data dir: {}", e))?
+        .join("download.session");
+    let session_str = session_path.to_string_lossy().to_string();
+
+    // Ensure the app data directory exists
+    if let Some(parent) = session_path.parent() {
+        let _ = std::fs::create_dir_all(parent);
+    }
+
+    eprintln!(
+        "[aria2c] session path: {} (exists: {})",
+        session_str,
+        session_path.exists()
+    );
+
     let args = build_start_args(
         config,
         if conf_path.exists() {
@@ -48,6 +67,8 @@ pub fn start_engine(app: &tauri::AppHandle, config: &serde_json::Value) -> Resul
         } else {
             None
         },
+        &session_str,
+        session_path.exists(),
     );
     eprintln!("[aria2c] starting with args: {:?}", args);
 
@@ -107,12 +128,23 @@ pub fn restart_engine(app: &tauri::AppHandle, config: &serde_json::Value) -> Res
     start_engine(app, config)
 }
 
-fn build_start_args(config: &serde_json::Value, conf_path: Option<&str>) -> Vec<String> {
+fn build_start_args(
+    config: &serde_json::Value,
+    conf_path: Option<&str>,
+    session_path: &str,
+    session_exists: bool,
+) -> Vec<String> {
     let mut args: Vec<String> = Vec::new();
 
     // Load bundled config file if available
     if let Some(path) = conf_path {
         args.push(format!("--conf-path={}", path));
+    }
+
+    // Session persistence: save active/paused downloads, restore on restart
+    args.push(format!("--save-session={}", session_path));
+    if session_exists {
+        args.push(format!("--input-file={}", session_path));
     }
 
     // Whitelist: only valid aria2c CLI options (from configKeys.ts systemKeys)

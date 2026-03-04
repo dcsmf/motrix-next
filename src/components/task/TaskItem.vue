@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { TASK_STATUS } from '@shared/constants'
 import { checkTaskIsSeeder, getTaskName, calcProgress, bytesToSize, timeRemaining, timeFormat, checkTaskIsBT } from '@shared/utils'
+import { exists } from '@tauri-apps/plugin-fs'
 import { NProgress, NIcon } from 'naive-ui'
-import { ArrowUpOutline, ArrowDownOutline, GitNetworkOutline, MagnetOutline } from '@vicons/ionicons5'
+import { ArrowUpOutline, ArrowDownOutline, GitNetworkOutline, MagnetOutline, AlertCircleOutline } from '@vicons/ionicons5'
 import TaskItemActions from './TaskItemActions.vue'
 
 const props = defineProps<{ task: Record<string, unknown> }>()
@@ -66,12 +67,44 @@ function onDblClick() {
   if (s === TASK_STATUS.ACTIVE) emit('pause', props.task)
   else if (s === TASK_STATUS.WAITING || s === TASK_STATUS.PAUSED) emit('resume', props.task)
 }
+
+// File missing detection for completed/stopped tasks
+const fileMissing = ref(false)
+
+async function checkFileExists() {
+  const status = props.task.status as string
+  if (status === TASK_STATUS.ACTIVE || status === TASK_STATUS.WAITING) {
+    fileMissing.value = false
+    return
+  }
+  const dir = props.task.dir as string
+  const files = props.task.files as { path?: string }[] | undefined
+  if (!files || files.length === 0 || !dir) {
+    fileMissing.value = false
+    return
+  }
+  try {
+    const firstFile = files[0]?.path
+    if (firstFile) {
+      fileMissing.value = !(await exists(firstFile))
+    }
+  } catch {
+    fileMissing.value = false
+  }
+}
+
+onMounted(checkFileExists)
+watch(() => props.task.status, checkFileExists)
 </script>
 
 <template>
-  <div class="task-item" @dblclick="onDblClick">
+  <div class="task-item" :class="{ 'file-missing': fileMissing }" @dblclick="onDblClick">
     <div class="task-name" :title="taskFullName">
       <span>{{ taskFullName }}</span>
+      <span v-if="fileMissing" class="file-missing-tag">
+        <NIcon :size="13"><AlertCircleOutline /></NIcon>
+        {{ t('task.file-missing') || 'File missing' }}
+      </span>
     </div>
     <TaskItemActions
       :task="task"
@@ -156,6 +189,24 @@ function onDblClick() {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+.file-missing-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: #e88080;
+  opacity: 0.85;
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: fade-in 0.3s ease;
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 0.85; }
+}
+.task-item.file-missing {
+  border-color: rgba(232, 128, 128, 0.2);
 }
 .task-progress-info {
   display: flex;

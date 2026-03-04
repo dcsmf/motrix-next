@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'الكوكيز',
   'task-proxy': 'الخادم الوسيط',
   'task-error-info': 'خطأ',
+  'file-missing': 'File missing',
   'task-piece': 'قطعة',
   'task-piece-length': 'حجم القطعة',
   'task-num-pieces': 'قطع',

@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'Cookie',
   'task-proxy': 'Fullmektig',
   'task-error-info': 'Feil',
+  'file-missing': 'File missing',
   'task-piece': 'Stykke',
   'task-piece-length': 'Stykkestørrelse',
   'task-num-pieces': 'Stykker',

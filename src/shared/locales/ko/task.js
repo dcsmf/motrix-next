@@ -31,6 +31,7 @@ export default {
   'task-cookie': '쿠키',
   'task-proxy': '프록시',
   'task-error-info': '오류',
+  'file-missing': 'File missing',
   'task-piece': '조각',
   'task-piece-length': '조각 크기',
   'task-num-pieces': '조각',

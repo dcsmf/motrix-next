@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'Cookie',
   'task-proxy': 'Proxy',
   'task-error-info': 'Ошибка',
+  'file-missing': 'File missing',
   'task-piece': 'Кусок',
   'task-piece-length': 'Размер куска',
   'task-num-pieces': 'Шт',

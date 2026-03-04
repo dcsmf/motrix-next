@@ -31,6 +31,7 @@ export default {
   'task-cookie': 'کوکی',
   'task-proxy': 'پیشکار',
   'task-error-info': 'خطا',
+  'file-missing': 'File missing',
   'task-piece': 'قطعه',
   'task-piece-length': 'اندازه قطعه',
   'task-num-pieces': 'قطعات',

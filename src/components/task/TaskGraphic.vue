@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 
 const props = withDefaults(defineProps<{
   bitfield: string
@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<{
 })
 
 const container = ref<HTMLElement>()
+const canvas = ref<HTMLCanvasElement>()
 const containerWidth = ref(300)
 
 function updateWidth() {
@@ -26,7 +27,10 @@ let ro: ResizeObserver | null = null
 onMounted(() => {
   updateWidth()
   if (container.value) {
-    ro = new ResizeObserver(updateWidth)
+    ro = new ResizeObserver(() => {
+      updateWidth()
+      nextTick(draw)
+    })
     ro.observe(container.value)
   }
 })
@@ -43,53 +47,102 @@ const columnCount = computed(() => {
 
 const rowCount = computed(() => Math.ceil(len.value / columnCount.value))
 
-const svgWidth = computed(() => atomWG.value * (columnCount.value - 1) + props.atomWidth)
-const svgHeight = computed(() => atomHG.value * (rowCount.value - 1) + props.atomHeight)
-
-const atoms = computed(() => {
-  const result: { id: number; status: number; x: number; y: number }[] = []
-  for (let i = 0; i < len.value; i++) {
-    const col = i % columnCount.value
-    const row = Math.floor(i / columnCount.value)
-    result.push({
-      id: i,
-      status: Math.floor(parseInt(props.bitfield[i], 16) / 4),
-      x: col * atomWG.value,
-      y: row * atomHG.value,
-    })
-  }
-  return result
-})
+const canvasWidth = computed(() => atomWG.value * (columnCount.value - 1) + props.atomWidth)
+const canvasHeight = computed(() => atomHG.value * (rowCount.value - 1) + props.atomHeight)
 
 const statusColors = ['#2a2a2a', '#3a5a3a', '#4a8a4a', '#5aba5a', '#67C23A']
 const strokeColor = '#333'
+
+// Track previous status for fade-in animation
+const prevStatus = ref<number[]>([])
+
+function draw() {
+  const cvs = canvas.value
+  if (!cvs || !props.bitfield) return
+
+  const dpr = window.devicePixelRatio || 1
+  const w = canvasWidth.value
+  const h = canvasHeight.value
+
+  cvs.width = w * dpr
+  cvs.height = h * dpr
+  cvs.style.width = w + 'px'
+  cvs.style.height = h + 'px'
+
+  const ctx = cvs.getContext('2d')
+  if (!ctx) return
+  ctx.scale(dpr, dpr)
+  ctx.clearRect(0, 0, w, h)
+
+  const cols = columnCount.value
+  const aw = props.atomWidth
+  const ah = props.atomHeight
+  const awg = atomWG.value
+  const ahg = atomHG.value
+  const r = props.atomRadius
+  const bf = props.bitfield
+  const n = bf.length
+
+  const newStatus: number[] = new Array(n)
+
+  for (let i = 0; i < n; i++) {
+    const col = i % cols
+    const row = Math.floor(i / cols)
+    const x = col * awg
+    const y = row * ahg
+    const status = Math.floor(parseInt(bf[i], 16) / 4)
+    newStatus[i] = status
+
+    const wasInactive = prevStatus.value.length > 0 && (prevStatus.value[i] || 0) === 0
+    const justActivated = wasInactive && status > 0
+
+    ctx.fillStyle = statusColors[status] || statusColors[0]
+    ctx.globalAlpha = status > 0 ? 1.0 : 0.5
+
+    // Draw rounded rect
+    ctx.beginPath()
+    ctx.moveTo(x + r, y)
+    ctx.lineTo(x + aw - r, y)
+    ctx.arcTo(x + aw, y, x + aw, y + r, r)
+    ctx.lineTo(x + aw, y + ah - r)
+    ctx.arcTo(x + aw, y + ah, x + aw - r, y + ah, r)
+    ctx.lineTo(x + r, y + ah)
+    ctx.arcTo(x, y + ah, x, y + ah - r, r)
+    ctx.lineTo(x, y + r)
+    ctx.arcTo(x, y, x + r, y, r)
+    ctx.closePath()
+    ctx.fill()
+
+    // Subtle stroke
+    ctx.strokeStyle = strokeColor
+    ctx.lineWidth = 0.5
+    ctx.globalAlpha = status > 0 ? 0.6 : 0.3
+    ctx.stroke()
+
+    // Glow for newly activated pieces
+    if (justActivated) {
+      ctx.globalAlpha = 0.3
+      ctx.fillStyle = '#67C23A'
+      ctx.fill()
+    }
+  }
+
+  ctx.globalAlpha = 1.0
+  prevStatus.value = newStatus
+}
+
+watch(() => props.bitfield, () => nextTick(draw))
+watch([canvasWidth, canvasHeight], () => nextTick(draw))
+onMounted(() => nextTick(draw))
 </script>
 
 <template>
   <div ref="container" class="task-graphic-container">
-    <svg
+    <canvas
       v-if="bitfield"
+      ref="canvas"
       class="task-graphic"
-      :width="svgWidth"
-      :height="svgHeight"
-      :viewBox="`0 0 ${svgWidth} ${svgHeight}`"
-    >
-      <rect
-        v-for="atom in atoms"
-        :key="atom.id"
-        class="piece-cell"
-        :class="{ 'piece-active': atom.status > 0 }"
-        :x="atom.x"
-        :y="atom.y"
-        :width="atomWidth"
-        :height="atomHeight"
-        :rx="atomRadius"
-        :ry="atomRadius"
-        :fill="statusColors[atom.status] || statusColors[0]"
-        :stroke="strokeColor"
-        stroke-width="0.5"
-      />
-    </svg>
+    />
     <div v-else class="no-bitfield">No piece data</div>
   </div>
 </template>
@@ -102,13 +155,6 @@ const strokeColor = '#333'
 }
 .task-graphic {
   display: block;
-}
-.piece-cell {
-  transition: fill 0.5s ease, opacity 0.5s ease;
-  opacity: 0.5;
-}
-.piece-active {
-  opacity: 1;
 }
 .no-bitfield {
   color: #666;
