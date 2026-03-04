@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app'
@@ -171,7 +171,30 @@ function clearTorrent() {
 
 function handleTabChange(name: string) {
   slideDirection.value = name === ADD_TASK_TYPE.TORRENT ? 'left' : 'right'
+
+  // Lock the pane wrapper to current pixel height before switching
+  // so CSS transition can animate from pixel → pixel (not auto → pixel)
+  const card = document.querySelector('.add-task-card')
+  const wrapper = card?.querySelector('.n-tabs-pane-wrapper') as HTMLElement | null
+  if (wrapper) {
+    wrapper.style.height = wrapper.offsetHeight + 'px'
+    // Force reflow so the browser registers the current height
+    void wrapper.offsetHeight
+  }
+
   activeTab.value = name
+
+  // After Vue re-renders, measure new height and let CSS transition to it
+  nextTick(() => {
+    if (wrapper) {
+      const pane = wrapper.querySelector('.n-tab-pane') as HTMLElement | null
+      if (pane) {
+        wrapper.style.height = pane.offsetHeight + 'px'
+      }
+      // After transition ends, release to auto so content can grow naturally
+      setTimeout(() => { wrapper.style.height = '' }, 350)
+    }
+  })
 }
 
 async function chooseDirectory() {
@@ -290,11 +313,11 @@ onUnmounted(() => { document.removeEventListener('keydown', handleHotkey) })
       <NForm label-placement="left" label-width="110px">
         <NTabs :value="activeTab" type="line" animated @update:value="handleTabChange">
           <NTabPane :name="ADD_TASK_TYPE.URI" :tab="t('task.uri-task') || 'URL'">
-            <div style="padding-bottom: 12px;">
+            <div class="tab-pane-content">
               <NFormItem :show-label="false">
                 <NInput
                   type="textarea"
-                  :autosize="{ minRows: 3, maxRows: 5 }"
+                  :rows="4"
                   :placeholder="t('task.uri-task-tips') || 'One URL per line'"
                   v-model:value="form.uris"
                 />
@@ -302,7 +325,7 @@ onUnmounted(() => { document.removeEventListener('keydown', handleHotkey) })
             </div>
           </NTabPane>
           <NTabPane :name="ADD_TASK_TYPE.TORRENT" :tab="t('task.torrent-task') || 'Torrent'">
-            <div style="padding-bottom: 12px;">
+            <div class="tab-pane-content">
               <template v-if="torrentLoaded">
                 <div class="torrent-info-row">
                   <NTooltip>
@@ -339,8 +362,7 @@ onUnmounted(() => { document.removeEventListener('keydown', handleHotkey) })
             </div>
           </NTabPane>
         </NTabs>
-        <Transition :name="'tab-slide-' + slideDirection" mode="out-in">
-          <div :key="activeTab" class="tab-shared-form">
+          <div class="tab-shared-form">
             <NGrid :cols="24" :x-gap="12">
               <NGridItem :span="15">
                 <NFormItem :label="t('task.task-out') + ':'">
@@ -395,7 +417,6 @@ onUnmounted(() => { document.removeEventListener('keydown', handleHotkey) })
               </div>
             </NCollapseTransition>
           </div>
-        </Transition>
       </NForm>
       <template #footer>
         <NSpace justify="end">
@@ -408,13 +429,24 @@ onUnmounted(() => { document.removeEventListener('keydown', handleHotkey) })
 </template>
 
 <style scoped>
+.tab-pane-content {
+  min-height: 130px;
+  padding-bottom: 12px;
+}
+.add-task-card :deep(.n-card__content) {
+  transition: height 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
 .torrent-upload {
-  padding: 40px 0;
+  min-height: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .torrent-upload:hover {
   border-color: var(--color-primary);
@@ -453,7 +485,7 @@ onUnmounted(() => { document.removeEventListener('keydown', handleHotkey) })
 .tab-slide-left-leave-active,
 .tab-slide-right-enter-active,
 .tab-slide-right-leave-active {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .tab-slide-left-enter-from {
   opacity: 0;

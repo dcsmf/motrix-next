@@ -112,7 +112,7 @@ function showAddTask() {
   margin-top: 24px;
   cursor: pointer;
   border-radius: 16px;
-  transition: background-color 0.25s;
+  transition: background-color 0.2s cubic-bezier(0.2, 0, 0, 1);
   display: flex;
   align-items: center;
   justify-content: center;

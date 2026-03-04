@@ -190,7 +190,7 @@ watch(() => props.task.status, checkFileExists)
   background-color: var(--task-item-bg);
   border: 1px solid var(--task-item-border);
   border-radius: 6px;
-  transition: border-color .25s cubic-bezier(.645, .045, .355, 1);
+  transition: border-color .2s cubic-bezier(0.2, 0, 0, 1);
 }
 .task-item:hover {
   border-color: var(--task-item-hover-border);

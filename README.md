@@ -52,6 +52,17 @@ We owe a great deal to the original [Motrix](https://github.com/agalwood/Motrix)
 
 Version numbering starts at `1.0.0` to reflect this clean break.
 
+### Design & Motion
+
+The overall UI layout stays true to Motrix's original design — the sidebar navigation, task list, and preference panels all follow the familiar structure that made Motrix intuitive from day one.
+
+What changed is everything underneath. Every transition and micro-interaction has been carefully tuned to follow [Material Design 3](https://m3.material.io/styles/motion/overview) motion guidelines:
+
+- **Asymmetric timing** — enter animations are slightly longer than exits, giving new content time to land while dismissed content leaves quickly
+- **Emphasized easing curves** — decelerate on enter (`cubic-bezier(0.2, 0, 0, 1)`), accelerate on exit (`cubic-bezier(0.3, 0, 0.8, 0.15)`), replacing generic `ease` curves throughout the codebase
+- **Spring-based modals** — dialogs use physically-modeled spring animations for a natural, responsive feel
+- **Consistent motion tokens** — all durations and curves are defined as CSS custom properties, ensuring a unified rhythm across 12+ components
+
 ## Features
 
 - **Multi-protocol downloads** — HTTP, FTP, BitTorrent, Magnet links
@@ -60,7 +71,8 @@ Version numbering starts at `1.0.0` to reflect this clean break.
 - **Concurrent downloads** — Up to 10 tasks with configurable thread count
 - **Speed control** — Global and per-task upload/download limits
 - **System tray** — Real-time speed display in the menu bar (macOS)
-- **Dark mode** — Native dark theme as default
+- **Dark mode** — Native dark theme as default, with system preference detection
+- **i18n** — Auto-detects system language on first launch, 25+ languages supported
 - **Task management** — Pause, resume, delete with file cleanup, batch operations
 - **Download protocols** — Register as default handler for magnet and thunder links
 - **Notifications** — System notifications on task completion

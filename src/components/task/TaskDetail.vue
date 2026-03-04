@@ -310,7 +310,7 @@ function handleClose() {
   border-bottom: 2px solid transparent;
   color: var(--task-action-color, #999);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .detail-tab:hover {
@@ -377,7 +377,7 @@ function handleClose() {
 .tab-slide-left-leave-active,
 .tab-slide-right-enter-active,
 .tab-slide-right-leave-active {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .tab-slide-left-enter-from {

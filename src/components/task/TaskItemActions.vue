@@ -109,7 +109,7 @@ function onAction(event: string) {
   color: var(--task-action-color);
   background-color: var(--task-action-bg);
   border-radius: 18px;
-  transition: all .25s cubic-bezier(.645, .045, .355, 1);
+  transition: all .2s cubic-bezier(0.2, 0, 0, 1);
   list-style: none;
 }
 .task-item-actions:hover {

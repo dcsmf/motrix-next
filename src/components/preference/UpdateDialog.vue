@@ -330,11 +330,11 @@ defineExpose({ open })
 }
 
 .phase-switch-enter-active {
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1),
               transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .phase-switch-leave-active {
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 1, 1),
+  transition: opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15),
               transform 0.25s cubic-bezier(0.4, 0, 1, 1);
 }
 .phase-switch-enter-from {

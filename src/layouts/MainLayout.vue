@@ -192,7 +192,7 @@ onUnmounted(() => {
   border-radius: 12px;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 #container.app-ready {
   opacity: 1;

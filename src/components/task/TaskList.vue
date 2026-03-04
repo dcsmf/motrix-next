@@ -105,10 +105,10 @@ function handleItemClick(task: Record<string, unknown>, event: MouseEvent) {
   margin-bottom: 16px;
 }
 .task-list-enter-active {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 .task-list-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.3, 0, 0.8, 0.15);
   position: absolute;
   width: calc(100% - 72px);
 }
@@ -121,7 +121,7 @@ function handleItemClick(task: Record<string, unknown>, event: MouseEvent) {
   transform: translateY(-10px) scale(0.97);
 }
 .task-list-move {
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 .no-task {
   display: flex;
@@ -148,7 +148,7 @@ function handleItemClick(task: Record<string, unknown>, event: MouseEvent) {
   font-size: 14px;
   color: #555;
 }
-.fade-enter-active { transition: opacity 0.3s ease; }
-.fade-leave-active { transition: opacity 0.2s ease; }
+.fade-enter-active { transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1); }
+.fade-leave-active { transition: opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15); }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>

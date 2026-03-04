@@ -66,9 +66,9 @@
     --font-size-xs: 12px;
     --font-size-lg: 16px;
     --border-radius: 4px;
-    --transition-all: all .25s cubic-bezier(.645, .045, .355, 1);
-    --transition-fast: .2s ease;
-    --transition-border: border-color .25s cubic-bezier(.645, .045, .355, 1);
+    --transition-all: all .2s cubic-bezier(0.2, 0, 0, 1);
+    --transition-fast: .15s cubic-bezier(0.2, 0, 0, 1);
+    --transition-border: border-color .2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .dark {
@@ -201,6 +201,7 @@ textarea {
 .fade-enter-active {
     transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
+
 .fade-leave-active {
     transition: opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15);
 }
@@ -213,6 +214,7 @@ textarea {
 .fade-scale-enter-active {
     transition: opacity 0.22s cubic-bezier(0.2, 0, 0, 1), transform 0.22s cubic-bezier(0.2, 0, 0, 1);
 }
+
 .fade-scale-leave-active {
     transition: opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15), transform 0.15s cubic-bezier(0.3, 0, 0.8, 0.15);
 }
@@ -228,13 +230,15 @@ textarea {
 }
 
 .n-tabs-pane-wrapper {
-    transition: opacity 0.18s cubic-bezier(0.2, 0, 0, 1) !important;
+    transition: opacity 0.18s cubic-bezier(0.2, 0, 0, 1), height 0.3s cubic-bezier(0.2, 0, 0, 1) !important;
+    overflow: hidden;
 }
 
 .n-tab-pane-enter-active {
     transition: opacity 0.18s cubic-bezier(0.2, 0, 0, 1) !important;
     transform: none !important;
 }
+
 .n-tab-pane-leave-active {
     transition: opacity 0.12s cubic-bezier(0.3, 0, 0.8, 0.15) !important;
     transform: none !important;
@@ -246,9 +250,12 @@ textarea {
     transform: none !important;
 }
 
-.n-modal-mask-enter-active,
+.n-modal-mask-enter-active {
+    transition: opacity 0.25s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
 .n-modal-mask-leave-active {
-    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15) !important;
 }
 
 .n-modal-body-wrapper--enter-active {
@@ -256,17 +263,17 @@ textarea {
 }
 
 .n-modal-body-wrapper--leave-active {
-    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15), transform 0.15s cubic-bezier(0.3, 0, 0.8, 0.15) !important;
 }
 
 .n-modal-body-wrapper--enter-from {
     opacity: 0 !important;
-    transform: scale(0.88) !important;
+    transform: scale(0.92) !important;
 }
 
 .n-modal-body-wrapper--leave-to {
     opacity: 0 !important;
-    transform: scale(0.94) !important;
+    transform: scale(0.96) !important;
 }
 
 .n-dialog {
