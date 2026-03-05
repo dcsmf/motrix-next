@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Suprimiu les tasques correctament al lot',
   'batch-delete-task-fail': 'No s\'ha pogut suprimir les tasques del lot',
   'refresh-list': 'Refrescar llista de tasques',
-  'no-task': 'No hi ha tasques actuals',
   'copy-link': 'Copiar enllaç',
   'copy-link-success': 'Enllaç copiat amb èxit',
   'remove-record': 'Eliminar tasca',

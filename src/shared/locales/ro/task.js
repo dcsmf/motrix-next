@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Sarcinile în lot au fost șterse cu succes',
   'batch-delete-task-fail': 'Nu s-au putut șterge sarcinile in lot',
   'refresh-list': 'Reîncarcă lista de sarcini',
-  'no-task': 'Nu există sarcini curente',
   'copy-link': 'Copiază Link',
   'copy-link-success': 'Link copiat cu succes',
   'remove-record': 'Șterge istoric sarcină',

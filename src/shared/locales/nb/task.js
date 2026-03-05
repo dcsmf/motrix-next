@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Slett oppgaver i batch',
   'batch-delete-task-fail': 'Kunne ikke slette oppgaver i batch',
   'refresh-list': 'Oppdater oppgaveliste',
-  'no-task': 'Det er ingen aktuelle oppgaver',
   'copy-link': 'Kopier link',
   'copy-link-success': 'Koblingen ble kopiert',
   'remove-record': 'Fjern oppgaveliste',

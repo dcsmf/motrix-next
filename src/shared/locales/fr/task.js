@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Supprimez avec succès les tâches du lot',
   'batch-delete-task-fail': 'Impossible de supprimer les tâches du lot',
   'refresh-list': 'Rafraichir la liste des tâches',
-  'no-task': 'Aucun téléchargement en cours',
   'copy-link': 'Copier le lien',
   'copy-link-success': 'Lien copié',
   'remove-record': 'Effacer l\'enregistrement des tâches',

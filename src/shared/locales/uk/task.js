@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Видалити завдання в пакеті',
   'batch-delete-task-fail': 'Не вдалося видалити завдання з партії',
   'refresh-list': 'Оновити список завдань',
-  'no-task': 'Нема поточних завдань',
   'copy-link': 'Копіювати посилання',
   'copy-link-success': 'Успішно скопійоване посилання',
   'remove-record': 'Видалити запис про завдання',

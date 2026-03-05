@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'تم بنجاح حذف التحميلات دفعة واحدة',
   'batch-delete-task-fail': 'فشل في حذف التحميلات دفعة واحدة',
   'refresh-list': 'تحديث قائمة التحميلات',
-  'no-task': 'لا توجد تحميلات حالية',
   'copy-link': 'نسخ الرابط',
   'copy-link-success': 'تم نسخ الرابط بنجاح',
   'remove-record': 'حذف سجل التحميل',

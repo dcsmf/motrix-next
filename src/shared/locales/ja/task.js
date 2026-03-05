@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'タスクをバッチで正常に削除しました',
   'batch-delete-task-fail': 'タスクをバッチで削除できませんでした',
   'refresh-list': 'タスクリストを更新',
-  'no-task': 'タスクはありません',
   'copy-link': 'リンクをコピー',
   'copy-link-success': 'リンクのコピーに成功',
   'remove-record': 'タスク履歴を削除',

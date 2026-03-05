@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Pomyślnie usunięto wiele zadań',
   'batch-delete-task-fail': 'Nie udało się usunąć wielu zadań',
   'refresh-list': 'Odśwież listę zadań',
-  'no-task': 'Nie ma obecnie żadnych zadań',
   'copy-link': 'Skopiuj link',
   'copy-link-success': 'Pomyślnie skopiowano link',
   'remove-record': 'Usuń rekord zadania',

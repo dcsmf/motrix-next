@@ -103,7 +103,6 @@ export default {
   'batch-delete-task-success': '批量移除任务成功',
   'batch-delete-task-fail': '批量移除任务失败',
   'refresh-list': '刷新任务列表',
-  'no-task': '当前没有下载任务',
   'copy-link': '拷贝链接',
   'copy-link-success': '拷贝链接成功',
   'remove-record': '移除下载记录',

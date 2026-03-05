@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'حذف دسته جمعی وظایف با موفقیت انجام شد',
   'batch-delete-task-fail': 'حذف دسته جمعی وظایف شکست خورد',
   'refresh-list': 'تازه کردن لیست وظایف',
-  'no-task': 'فعلا وظیفه‌ای وجود ندارد',
   'copy-link': 'رونوشت از پیوند',
   'copy-link-success': 'رونوشت از پیوند با موفقیت انجام شد',
   'remove-record': 'پاک کردن سابقهٔ وظیفه',

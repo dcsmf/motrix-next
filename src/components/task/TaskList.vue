@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useTaskStore } from '@/stores/task'
-import { useI18n } from 'vue-i18n'
 import { useTheme } from '@/composables/useTheme'
 import TaskItem from './TaskItem.vue'
 import watermarkDark from '@/assets/brand-watermark-dark.png'
@@ -18,7 +17,6 @@ const emit = defineEmits<{
   'stop-seeding': [task: Record<string, unknown>]
 }>()
 
-const { t } = useI18n()
 const taskStore = useTaskStore()
 const { isDark } = useTheme()
 const watermarkSrc = computed(() => isDark.value ? watermarkLight : watermarkDark)
@@ -84,7 +82,6 @@ function handleItemClick(task: Record<string, unknown>, event: MouseEvent) {
       <div v-if="mounted && taskList.length === 0" class="no-task">
         <div class="no-task-inner">
           <img :src="watermarkSrc" alt="Motrix Next" class="no-task-brand" />
-          <div class="no-task-text">{{ t('task.no-task') || 'No Task' }}</div>
         </div>
       </div>
     </Transition>
@@ -140,15 +137,10 @@ function handleItemClick(task: Record<string, unknown>, event: MouseEvent) {
   width: 100%;
 }
 .no-task-brand {
-  max-width: 320px;
-  width: 60%;
+  max-width: 480px;
+  width: 80%;
   opacity: 0.35;
   pointer-events: none;
-  margin-bottom: 16px;
-}
-.no-task-text {
-  font-size: 14px;
-  color: #555;
 }
 .fade-enter-active { transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1); }
 .fade-leave-active { transition: opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15); }

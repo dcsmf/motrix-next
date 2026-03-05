@@ -130,7 +130,7 @@ motrix-next/
 To bump the version, edit only `src-tauri/Cargo.toml`:
 
 ```toml
-version = "1.0.3"
+version = "1.1.0"
 ```
 
 ### Release

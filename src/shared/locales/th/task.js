@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'ลบงานในแบตช์สำเร็จ',
   'batch-delete-task-fail': 'ไม่สามารถลบงานในชุดงาน',
   'refresh-list': 'รีเฟรชรายการงาน',
-  'no-task': 'ไม่มีงานปัจจุบัน',
   'copy-link': 'คัดลอกลิงค์',
   'copy-link-success': 'คัดลอกลิงค์สำเร็จ',
   'remove-record': 'ลบบันทึกงาน',

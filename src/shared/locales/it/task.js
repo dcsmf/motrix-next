@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Attività eliminate in batch con successo',
   'batch-delete-task-fail': 'Impossibile eliminare in batch le attività',
   'refresh-list': 'Aggiorna la lista delle attività',
-  'no-task': 'Non ci sono attività',
   'copy-link': 'Copia link',
   'copy-link-success': 'Link copiato con successo',
   'remove-record': 'Rimuovi cronologia delle attività',

@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Aufgaben im Batch erfolgreich löschen',
   'batch-delete-task-fail': 'Fehler beim Löschen von Aufgaben im Stapel',
   'refresh-list': 'Aufgabenliste aktualisieren',
-  'no-task': 'Keine Downloads aktiv',
   'copy-link': 'Link kopieren',
   'copy-link-success': 'Link erfolgreich kopiert',
   'remove-record': 'Aufgaben Aufzeichnung löschen',

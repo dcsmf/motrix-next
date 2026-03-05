@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Успешно удалить задачи в пакетном режиме',
   'batch-delete-task-fail': 'Не удалось удалить задачи в пакетном режиме',
   'refresh-list': 'Обновить список заданий',
-  'no-task': 'Нет текущих заданий',
   'copy-link': 'Копировать ссылку',
   'copy-link-success': 'Успешно скопированна ссылка',
   'remove-record': 'Удалить запись про задание',

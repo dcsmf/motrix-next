@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Eliminar con éxito las tareas en lote',
   'batch-delete-task-fail': 'Error al eliminar tareas en lote',
   'refresh-list': 'Actualizar lista de tareas',
-  'no-task': 'No hay tareas actuales',
   'copy-link': 'Copiar enlace',
   'copy-link-success': 'Enlace copiado exitosamente',
   'remove-record': 'Eliminar tarea',

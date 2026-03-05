@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': '작업 일괄 삭제 성공',
   'batch-delete-task-fail': '작업 일괄 삭제 실패',
   'refresh-list': '작업 목록 새로 고침',
-  'no-task': '현재 다운로드 없음',
   'copy-link': '링크 복사',
   'copy-link-success': '링크 복사 성공',
   'remove-record': '작업 기록 제거',

@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Taken succesvol in batch verwijderd',
   'batch-delete-task-fail': 'Taken in batch konden niet worden verwijderd',
   'refresh-list': 'Takenlijst verversen',
-  'no-task': 'Geen taken actief',
   'copy-link': 'Link kopiëren',
   'copy-link-success': 'Link succesvol gekopieerd',
   'remove-record': 'Verwijder taak record',

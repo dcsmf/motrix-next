@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Berhasil menghapus tugas (batch)',
   'batch-delete-task-fail': 'Gagal menghapus tugas (batch)',
   'refresh-list': 'Muat Ulang Daftar',
-  'no-task': 'Tidak ada tugas',
   'copy-link': 'Salin Link',
   'copy-link-success': 'Berhasil menyalin link',
   'remove-record': 'Hapus Data Tugas',

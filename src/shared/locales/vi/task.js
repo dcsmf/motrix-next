@@ -102,7 +102,6 @@ export default {
   'batch-delete-task-success': 'Xóa các tác vụ hàng loạt thành công',
   'batch-delete-task-fail': 'Xóa các tác vụ hàng loạt thất bại',
   'refresh-list': 'Làm mới danh sách tác vụ',
-  'no-task': 'Hiện tại không có tác vụ',
   'copy-link': 'Sao chép đường dẫn',
   'copy-link-success': 'Sao chép đường dẫn thành công',
   'remove-record': 'Xóa bản ghi tác vụ',
