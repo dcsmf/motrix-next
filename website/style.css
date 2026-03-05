@@ -206,6 +206,10 @@ code {
   animation: float 800ms 80ms var(--ease-enter) both;
 }
 
+.h1-accent {
+  -webkit-text-fill-color: var(--accent);
+}
+
 .tagline {
   font-size: clamp(1rem, 2.2vw, 1.15rem);
   color: var(--text-dim);
