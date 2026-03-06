@@ -53,8 +53,12 @@ function switchTab(key: string) {
 
 const isBT = computed(() => props.task ? checkTaskIsBT(props.task as never) : false)
 
-watch(() => props.task, () => {
-  activeTab.value = 'general'
+const prevTaskGid = ref('')
+watch(() => props.task?.gid as string | undefined, (gid) => {
+  if (gid && gid !== prevTaskGid.value) {
+    activeTab.value = 'general'
+    prevTaskGid.value = gid
+  }
 })
 const isSeeder = computed(() => props.task ? checkTaskIsSeeder(props.task as never) : false)
 const taskStatusKey = computed(() => isSeeder.value ? TASK_STATUS.SEEDING : (props.task?.status as string))

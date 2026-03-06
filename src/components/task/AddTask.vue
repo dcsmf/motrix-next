@@ -253,9 +253,19 @@ async function handleSubmit() {
       if (form.value.authorization) headers.push(`Authorization: ${form.value.authorization}`)
       if (headers.length > 0) options.header = headers
       if (form.value.allProxy) options['all-proxy'] = form.value.allProxy
-      const outs = form.value.out ? buildOuts(uris, form.value.out) : []
-      if (outs.length > 0) delete options.out
-      await taskStore.addUri({ uris, outs, options })
+      if (uris.length > 1 && form.value.out) {
+        delete options.out
+        let outs = buildOuts(uris, form.value.out)
+        if (outs.length === 0) {
+          const dotIdx = form.value.out.lastIndexOf('.')
+          const base = dotIdx > 0 ? form.value.out.substring(0, dotIdx) : form.value.out
+          const ext = dotIdx > 0 ? form.value.out.substring(dotIdx) : ''
+          outs = uris.map((_, i) => `${base}_${i + 1}${ext}`)
+        }
+        await taskStore.addUri({ uris, outs, options })
+      } else {
+        await taskStore.addUri({ uris, outs: [], options })
+      }
     } else if (activeTab.value === ADD_TASK_TYPE.TORRENT && torrentBase64.value) {
       if (torrentInfoHash.value && isEngineReady()) {
         const { getClient } = await import('@/api/aria2')
