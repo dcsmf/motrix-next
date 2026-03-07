@@ -122,6 +122,8 @@ function handleDeleteTask(task: Record<string, unknown>) {
       d.negativeButtonProps = { disabled: true } as never
       d.closable = false
       d.maskClosable = false
+      // Yield to browser so the loading spinner renders before heavy IPC work
+      await new Promise(r => setTimeout(r, 0))
       try {
         await taskStore.removeTask(task as never)
         if (deleteFiles.value) {

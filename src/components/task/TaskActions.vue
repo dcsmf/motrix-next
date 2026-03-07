@@ -59,6 +59,8 @@ function onDeleteAll() {
       d.negativeButtonProps = { disabled: true } as never
       d.closable = false
       d.maskClosable = false
+      // Yield to browser so the loading spinner renders before heavy IPC work
+      await new Promise(r => setTimeout(r, 0))
       if (deleteFiles.value) {
         const tasks = taskStore.taskList.filter(t => gids.includes(t.gid))
         for (const task of tasks) {
