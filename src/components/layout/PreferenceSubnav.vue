@@ -76,7 +76,7 @@ function isActive(key: string) {
   line-height: 20px;
   border-radius: 3px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
   display: flex;
   align-items: center;
 }

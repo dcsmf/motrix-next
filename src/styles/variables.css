@@ -98,7 +98,7 @@
   --subnav-title: var(--m3-on-surface);
   --subnav-text: var(--m3-on-surface-variant);
   --subnav-active-text: var(--color-primary);
-  --subnav-active-bg: var(--m3-surface-container);
+  --subnav-active-bg: var(--m3-surface-container-highest);
   --subnav-action: var(--m3-on-surface-variant);
 
   --main-bg: var(--m3-surface);
