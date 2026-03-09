@@ -95,6 +95,16 @@ const batch = computed(() => appStore.pendingBatch)
 const hasBatch = computed(() => batch.value.length > 0)
 const fileItems = computed(() => batch.value.filter((i) => i.kind !== 'uri'))
 const selectedItem = computed(() => fileItems.value[selectedBatchIndex.value] || null)
+const batchListRef = ref<HTMLElement | null>(null)
+/** Manually controlled: stays true during leave animation of last item. */
+const showBatchList = ref(false)
+
+watch(
+  () => fileItems.value.length,
+  (len) => {
+    if (len > 0) showBatchList.value = true
+  },
+)
 
 const checkedRowKeys = computed({
   get: () => selectedItem.value?.selectedFileIndices || [],
@@ -255,6 +265,61 @@ async function chooseTorrentFile() {
 function removeBatchItem(item: BatchItem) {
   appStore.pendingBatch = batch.value.filter((i) => i !== item)
   selectedBatchIndex.value = Math.min(selectedBatchIndex.value, Math.max(0, fileItems.value.length - 1))
+}
+
+// ── Batch item TransitionGroup JS hooks (bypass CSS specificity) ────
+
+/** M3 emphasized decelerate easing for enter animations. */
+const M3_DECELERATE = 'cubic-bezier(0.2, 0, 0, 1)'
+/** M3 accelerate easing for exit animations. */
+const M3_ACCELERATE = 'cubic-bezier(0.3, 0, 0.8, 0.15)'
+
+function onBatchItemBeforeEnter(el: Element) {
+  const htmlEl = el as HTMLElement
+  htmlEl.style.opacity = '0'
+}
+
+function onBatchItemEnter(el: Element, done: () => void) {
+  const htmlEl = el as HTMLElement
+  const anim = htmlEl.animate([{ opacity: 0 }, { opacity: 1 }], {
+    duration: 220,
+    easing: M3_DECELERATE,
+    fill: 'forwards',
+  })
+  anim.onfinish = () => {
+    htmlEl.style.opacity = ''
+    done()
+  }
+}
+function onBatchItemAfterLeave() {
+  if (fileItems.value.length === 0 && batchListRef.value) {
+    const el = batchListRef.value
+    const h = el.offsetHeight
+    el.animate(
+      [
+        { height: `${h}px`, marginBottom: '8px', opacity: 1 },
+        { height: '0px', marginBottom: '0px', opacity: 0 },
+      ],
+      { duration: 150, easing: M3_ACCELERATE, fill: 'forwards' },
+    ).onfinish = () => {
+      showBatchList.value = false
+      el.getAnimations().forEach((a) => a.cancel())
+    }
+  }
+}
+
+function onBatchItemLeave(el: Element, done: () => void) {
+  const htmlEl = el as HTMLElement
+  const startHeight = htmlEl.offsetHeight
+  htmlEl.style.overflow = 'hidden'
+  const anim = htmlEl.animate(
+    [
+      { opacity: 1, height: `${startHeight}px` },
+      { opacity: 0, height: '0px', paddingTop: '0px', paddingBottom: '0px' },
+    ],
+    { duration: 150, easing: M3_ACCELERATE, fill: 'forwards' },
+  )
+  anim.onfinish = done
 }
 
 // ── Submit ───────────────────────────────────────────────────────────
@@ -434,8 +499,16 @@ function kindTagType(kind: string): 'info' | 'success' | 'warning' {
           <NTabPane :name="ADD_TASK_TYPE.TORRENT" :tab="t('task.torrent-task') || 'Torrent'">
             <div class="tab-pane-content">
               <!-- Batch list for file items -->
-              <div v-show="fileItems.length > 0" class="batch-list">
-                <TransitionGroup name="batch-item-list" tag="div" appear>
+              <div v-show="showBatchList" ref="batchListRef" class="batch-list">
+                <TransitionGroup
+                  tag="div"
+                  :css="false"
+                  appear
+                  @before-enter="onBatchItemBeforeEnter"
+                  @enter="onBatchItemEnter"
+                  @leave="onBatchItemLeave"
+                  @after-leave="onBatchItemAfterLeave"
+                >
                   <div
                     v-for="(item, idx) in fileItems"
                     :key="item.id"
@@ -542,12 +615,13 @@ function kindTagType(kind: string): 'info' | 'success' | 'warning' {
   min-height: 160px;
 }
 
-/* Batch item list — no overflow:hidden, it clips position:absolute leave items */
+/* Batch item list — overflow:hidden safe now (JS hooks don't use position:absolute) */
 .batch-list {
   position: relative;
   margin-bottom: 8px;
   border-radius: 6px;
   border: 1px solid var(--n-border-color, rgba(255, 255, 255, 0.09));
+  overflow: hidden;
 }
 </style>
 
@@ -586,28 +660,6 @@ function kindTagType(kind: string): 'info' | 'success' | 'warning' {
 }
 .batch-fade-enter-from,
 .batch-fade-leave-to {
-  opacity: 0;
-}
-
-/* TransitionGroup: batch item add/remove — opacity fade + FLIP move */
-.batch-item-list-enter-active,
-.batch-item-list-move {
-  transition:
-    opacity 0.22s cubic-bezier(0.2, 0, 0, 1),
-    transform 0.22s cubic-bezier(0.2, 0, 0, 1);
-}
-.batch-item-list-leave-active {
-  transition:
-    opacity 0.15s cubic-bezier(0.3, 0, 0.8, 0.15),
-    transform 0.15s cubic-bezier(0.3, 0, 0.8, 0.15);
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-.batch-item-list-enter-from {
-  opacity: 0;
-}
-.batch-item-list-leave-to {
   opacity: 0;
 }
 

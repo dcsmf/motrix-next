@@ -20,6 +20,7 @@ import AddTask from '@/components/task/AddTask.vue'
 import UpdateDialog from '@/components/preference/UpdateDialog.vue'
 import { useTaskStore } from '@/stores/task'
 import { usePreferenceStore } from '@/stores/preference'
+import { useAppMessage } from '@/composables/useAppMessage'
 import { openUrl } from '@tauri-apps/plugin-opener'
 import aria2Api, { isEngineReady } from '@/api/aria2'
 import { open as openDialog } from '@tauri-apps/plugin-dialog'
@@ -33,6 +34,7 @@ const appStore = useAppStore()
 const taskStore = useTaskStore()
 const preferenceStore = usePreferenceStore()
 const navDialog = useDialog()
+const message = useAppMessage()
 
 const isTaskPage = computed(() => route.path.startsWith('/task'))
 const isPreferencePage = computed(() => route.path.startsWith('/preference'))
@@ -148,7 +150,8 @@ onMounted(async () => {
         paths?.filter((p: string) => p.endsWith('.torrent') || p.endsWith('.metalink') || p.endsWith('.meta4')) || []
       if (validPaths.length > 0) {
         const items = validPaths.map((p: string) => createBatchItem(detectKind(p), p))
-        appStore.enqueueBatch(items)
+        const skipped = appStore.enqueueBatch(items)
+        if (skipped > 0) message.warning(t('task.duplicate-task'))
       }
     }
   })
@@ -164,9 +167,11 @@ onMounted(async () => {
           filters: [{ name: 'Torrent / Metalink', extensions: ['torrent', 'metalink', 'meta4'] }],
         })
         if (typeof selected === 'string') {
-          appStore.enqueueBatch([createBatchItem(detectKind(selected), selected)])
+          const skipped = appStore.enqueueBatch([createBatchItem(detectKind(selected), selected)])
+          if (skipped > 0) message.warning(t('task.duplicate-task'))
         } else if (Array.isArray(selected) && selected.length > 0) {
-          appStore.enqueueBatch(selected.map((p) => createBatchItem(detectKind(p), p)))
+          const skipped = appStore.enqueueBatch(selected.map((p) => createBatchItem(detectKind(p), p)))
+          if (skipped > 0) message.warning(t('task.duplicate-task'))
         }
         break
       }

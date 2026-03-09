@@ -63,15 +63,19 @@ export const useAppStore = defineStore('app', () => {
    * Unified entry point for all external inputs.
    * Accepts pre-built BatchItems (already resolved) and appends them to
    * the pending batch, then opens the add-task dialog.
+   * @returns Number of duplicate items skipped.
    */
-  function enqueueBatch(items: BatchItem[]) {
-    if (items.length === 0) return
+  function enqueueBatch(items: BatchItem[]): number {
+    if (items.length === 0) return 0
     // Deduplicate: skip items whose source is already queued
     const existingSources = new Set(pendingBatch.value.map((i) => i.source))
     const unique = items.filter((i) => !existingSources.has(i.source))
-    if (unique.length === 0) return
-    pendingBatch.value = [...pendingBatch.value, ...unique]
+    const skipped = items.length - unique.length
+    if (unique.length > 0) {
+      pendingBatch.value = [...pendingBatch.value, ...unique]
+    }
     addTaskVisible.value = true
+    return skipped
   }
 
   /** Opens an empty add-task dialog for manual URI entry. */
